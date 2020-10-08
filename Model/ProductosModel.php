@@ -24,7 +24,7 @@ class ProductosModel
 
     public function insertProducto($nombre, $descripcion, $precio, $stock)//Agrega un producto a la DB
     {
-        $sentencia = $this->db->prepare("INSERT INTO producto(nombre, descripcion. precio, stock) VALUES(?,?,?,?)");
+        $sentencia = $this->db->prepare("INSERT INTO producto(nombre, descripcion, precio, stock) VALUES(?,?,?,?)");
         $sentencia->execute(array($nombre, $descripcion, $precio, $stock));
     }
 

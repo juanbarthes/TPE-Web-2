@@ -34,7 +34,7 @@ class ProductosController
             $precio = $_POST["precio"];
             $stock = $_POST["stock"];
             if (($nombre != "") && ($descripcion != "") && ($precio != "")) {
-                if(isset(stock)){
+                if(isset($stock)){
                     $this->model->insertProducto($nombre, $descripcion, $precio, $stock);
                 }
                 else{
