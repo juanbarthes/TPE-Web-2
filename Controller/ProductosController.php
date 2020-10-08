@@ -18,7 +18,7 @@ class ProductosController
         //Traer productos de la DB
         $productos = $this->model->getProductos();
         //Mostrar los productos por pantalla
-        $this->view->showProductos($productos);
+        $this->view->showHome($productos);
     }
 
     public function getProducto()//Le pide al Model un producto y luego le pide al View que lo muestre por pantalla

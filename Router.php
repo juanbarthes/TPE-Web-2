@@ -8,21 +8,17 @@
     $r = new Router();
 
     // rutas
-    $r->addRoute("home", "GET", "TasksController", "Home");
-    $r->addRoute("mermelada", "GET", "TasksController", "Home");
+    $r->addRoute("home", "GET", "ProductosController", "getProductos");
 
     //Esto lo veo en TasksView
-    $r->addRoute("insert", "POST", "TasksController", "InsertTask");
+    /*$r->addRoute("insert", "POST", "TasksController", "InsertTask");
 
     $r->addRoute("delete/:ID", "GET", "TasksController", "BorrarLaTaskQueVienePorParametro");
     $r->addRoute("completar/:ID", "GET", "TasksController", "MarkAsCompletedTask");
-    $r->addRoute("edit/:ID", "GET", "TasksController", "EditTask");
+    $r->addRoute("edit/:ID", "GET", "TasksController", "EditTask");*/
 
     //Ruta por defecto.
-    $r->setDefaultRoute("TasksController", "Home");
-
-    //Advance
-    $r->addRoute("autocompletar", "GET", "TasksAdvanceController", "AutoCompletar");
+    $r->setDefaultRoute("ProductosController", "getProductos");
 
     //run
     $r->route($_GET['action'], $_SERVER['REQUEST_METHOD']); 
