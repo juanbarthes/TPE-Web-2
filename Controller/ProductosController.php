@@ -29,19 +29,18 @@ class ProductosController
     public function insertProducto()//Le pide al Model que agregue un producto nuevo
     {
         if (isset($_POST["nombre"]) && isset($_POST["descripcion"]) && isset($_POST["precio"])) {
-            ($nombre = $_POST["nombre"]) && ($categoria ? $_POST["categoria"]);
+            $nombre = $_POST["nombre"];
             $descripcion = $_POST["descripcion"];
             $precio = $_POST["precio"];
             $stock = $_POST["stock"];
             $categoria = $_POST["categoria"];
-            if (($nombre != "") && ($descripcion != "") && ($precio != "") && ($categoria != "")) {
-                if(isset($stock)){
-                    $this->model->insertProducto($nombre, $descripcion, $precio, $stock, $categoria);
-                }
-                else{
-                    $this->model->insertProducto($nombre, $descripcion, $precio, 0, $categoria);
-                }
+            if ((!isset($stock)) || ($stock == "")) {
+                $stock = 0;
             }
+            if ((!isset($categoria)) || ($categoria == "")) {
+                $categoria = "No asignada";
+            }
+            $this->model->insertProducto($nombre, $descripcion, $precio, $stock, $categoria);
         }
     }
 

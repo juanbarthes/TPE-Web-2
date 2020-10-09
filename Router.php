@@ -1,5 +1,6 @@
 <?php
     require_once 'Controller/ProductosController.php';
+    require_once "Controller/CategoriasController.php";
     require_once 'RouterClass.php';
     
     // CONSTANTES PARA RUTEO
@@ -8,17 +9,13 @@
     $r = new Router();
 
     // rutas
-    $r->addRoute("home", "GET", "ProductosController", "getProductos");
-
-    //Esto lo veo en TasksView
-    /*$r->addRoute("insert", "POST", "TasksController", "InsertTask");
-
-    $r->addRoute("delete/:ID", "GET", "TasksController", "BorrarLaTaskQueVienePorParametro");
-    $r->addRoute("completar/:ID", "GET", "TasksController", "MarkAsCompletedTask");
-    $r->addRoute("edit/:ID", "GET", "TasksController", "EditTask");*/
+    $r->addRoute("home", "GET", "CategoriasController", "home");
+    $r->addRoute("formularioCategoria", "GET", "CategoriasController", "formularioCategoria");
+    $r->addRoute("insertCategoria", "POST", "CategoriasController", "insertCategoria");
+    $r->addRoute("updateCategoria", "POST", "CategoriasController", "updateCategoria");
 
     //Ruta por defecto.
-    $r->setDefaultRoute("ProductosController", "getProductos");
+    $r->setDefaultRoute("CategoriasController", "home");
 
     //run
     $r->route($_GET['action'], $_SERVER['REQUEST_METHOD']); 

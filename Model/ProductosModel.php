@@ -19,12 +19,12 @@ class ProductosModel
     {
         $sentencia = $this->db->prepare("SELECT * FROM producto WHERE id=?");
         $sentencia->execute(array($id));
-        return $sentencia->fetch(PDO::FETCH_OBJ);
+        return $sentencia->fetch(PDO::FETCH_ASSOC);
     }
 
     public function insertProducto($nombre, $descripcion, $precio, $stock, $categoria)//Agrega un producto a la DB
     {
-        $sentencia = $this->db->prepare("INSERT INTO producto(nombre, descripcion, precio, stock) VALUES(?,?,?,?)");
+        $sentencia = $this->db->prepare("INSERT INTO producto(nombre, descripcion, precio, stock, categoria) VALUES(?,?,?,?,?)");
         $sentencia->execute(array($nombre, $descripcion, $precio, $stock, $categoria));
     }
 
@@ -36,7 +36,7 @@ class ProductosModel
 
     public function updateProducto($id, $nombre, $descripcion, $precio, $stock, $categoria)//Actualiza los datos de un producto de la DB
     {
-        $sentencia = $this->db->prepare("UPDATE producto SET nombre=?, descripcion=?, precio=?, stock=? WHERE id=?");
+        $sentencia = $this->db->prepare("UPDATE producto SET nombre=?, descripcion=?, precio=?, stock=?, categoria=? WHERE id=?");
         $sentencia->execute(array($nombre, $descripcion, $precio, $stock, $categoria, $id));
     }
 }
