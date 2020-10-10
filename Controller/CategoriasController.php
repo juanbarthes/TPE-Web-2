@@ -50,7 +50,7 @@ class CategoriasController
         $this->view->ShowHomeLocation();
     }
 
-    public function formularioCategoria($param = null)
+    public function formularioCategoria()
     {
         if (isset($_GET["id_c"]) && $_GET["id_c"] != "") {
             $id = $_GET["id_c"];
@@ -62,20 +62,5 @@ class CategoriasController
             $categoria = array("id_categoria" => "", "nombre_categoria" => "");
             $this->view->showFormularioCategoria($categoria, $action);
         }
-        //funcion vieja---------------------------------------------------------
-        
-        /*if (empty($param)) {
-            $id = "";
-        } else
-            $id = $param[0];
-        if (isset($id) && $id != "") {
-            $action = "updateCategoria";
-            $categoria = $this->model->getCategoria($id);
-            $this->view->showFormularioCategoria($categoria, $action);
-        } else {
-            $action = "insertCategoria";
-            $categoria = array("id_categoria" => "", "nombre_categoria" => "");
-            $this->view->showFormularioCategoria($categoria, $action);
-        }*/
     }
 }
