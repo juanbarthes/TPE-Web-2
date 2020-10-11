@@ -1,0 +1,109 @@
+@import url('https://fonts.googleapis.com/css2?family=Big+Shoulders+Display&display=swap');
+@font-face {
+  font-family: neon;
+  src: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/707108/neon.ttf);
+}
+
+
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  display: table;
+  background-color: rgba(17, 17, 17, 0.925);
+}
+
+
+/*neon animacion--------------------------------------------------*/
+.neon {
+  font-family:'Big Shoulders Display', cursive;
+  font-size: 30px;
+  color: #FB4264;
+  text-shadow: 0 0 3vw #F40A35;
+}
+.cat{
+  font-family:'neon', cursive;
+  color: #FB4264;
+  text-shadow: 0 0 3vw #F40A35;
+}
+
+.flux {
+  font-family: 'Big Shoulders Display', cursive;
+  font-size: 30px;
+  color: #426DFB;
+  text-shadow: 0 0 3vw #2356FF;
+}
+
+.neon {
+  animation: neon 10s ease infinite;
+  -moz-animation: neon 10s ease infinite;
+  -webkit-animation: neon 10s ease infinite;
+}
+
+
+
+@keyframes neon {
+  0%,
+  100% {
+    text-shadow: 0 0 1vw #e716fa, 0 0 3vw #e716fa, 0 0 10vw #e716fa, 0 0 10vw #e716fa, 0 0 .4vw #e528fe, .5vw .5vw .1vw #801469;
+    color: #fe28da;
+  }
+  50% {
+    text-shadow: 0 0 1vw #e716fa, 0 0 3vw #e716fa, 0 0 10vw #e716fa, 0 0 10vw #e716fa, 0 0 .4vw #e528fe, .5vw .5vw .1vw #801469;
+    color: #fe28da;
+  }
+}
+
+.flux {
+  animation: flux 10s linear infinite;
+  -moz-animation: flux 10s linear infinite;
+  -webkit-animation: flux 10s linear infinite;
+  -o-animation: flux 10s linear infinite;
+}
+
+@keyframes flux {
+  0%,
+  100% {
+    text-shadow: 0 0 1vw #1041FF, 0 0 3vw #1041FF, 0 0 10vw #1041FF, 0 0 10vw #1041FF, 0 0 .4vw #8BFDFE, .5vw .5vw .1vw #147280;
+    color: #28D7FE;
+  }
+  50% {
+    text-shadow: 0 0 1vw #1041FF, 0 0 3vw #1041FF, 0 0 10vw #1041FF, 0 0 10vw #1041FF, 0 0 .4vw #8BFDFE, .5vw .5vw .1vw #147280;
+    color: #28D7FE;
+  }
+}
+
+.cat{
+  animation: cat 10s linear infinite;
+  -moz-animation: cat 10s linear infinite;
+  -webkit-animation: cat 10s linear infinite;
+  -o-animation: cat 10s linear infinite;
+}
+
+@keyframes cat {
+  0%,
+  100% {
+    text-shadow: 0 0 1vw #ff423c, 0 0 3vw #ff423c, 0 0 10vw #ff423c, 0 0 10vw #ff423c, 0 0 .4vw #FED128, .5vw .5vw .1vw #806914;
+    color: #FED128;
+  }
+  50% {
+    text-shadow: 0 0 .5vw #800E0B, 0 0 1.5vw #800E0B, 0 0 5vw #800E0B, 0 0 5vw #800E0B, 0 0 .2vw #800E0B, .5vw .5vw .1vw #40340A;
+    color: #806914;
+  }
+}
+/* retocando  boostratasda ---------------------*/
+.btn-secondary{
+ background-color: #fe28da;
+}
+li.nav-item{
+
+
+}
+
+a img {
+  width: fit-content;
+  height: fit-content;
+}
