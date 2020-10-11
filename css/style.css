@@ -86,12 +86,12 @@ body {
 @keyframes cat {
   0%,
   100% {
-    text-shadow: 0 0 1vw #ff423c, 0 0 3vw #ff423c, 0 0 10vw #ff423c, 0 0 10vw #ff423c, 0 0 .4vw #FED128, .5vw .5vw .1vw #806914;
-    color: #FED128;
+    text-shadow: 0 0 1vw #b61ffc, 0 0 3vw #b61ffc, 0 0 10vw #b61ffc, 0 0 10vw #b61ffc, 0 0 .4vw #e528fe, .5vw .5vw .1vw #806914;
+    color: #9628fe;
   }
   50% {
-    text-shadow: 0 0 .5vw #800E0B, 0 0 1.5vw #800E0B, 0 0 5vw #800E0B, 0 0 5vw #800E0B, 0 0 .2vw #800E0B, .5vw .5vw .1vw #40340A;
-    color: #806914;
+    text-shadow: 0 0 .5vw #1041FF, 0 0 1.5vw #1041FF, 0 0 5vw #1041FF, 0 0 5vw #1041FF, 0 0 .2vw #1041FF, .5vw .5vw .1vw #147280;
+    color: #28D7FE;
   }
 }
 /* retocando  boostratasda ---------------------*/
