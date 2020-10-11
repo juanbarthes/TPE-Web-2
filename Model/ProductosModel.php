@@ -8,7 +8,7 @@ class ProductosModel
         $this->db = new PDO('mysql:host=localhost;'.'dbname=productos;charset=utf8', 'root', '');
     }
 
-    public function getProductos(Type $var = null)//Obtiene los productos de la DB
+    public function getProductos()//Obtiene los productos de la DB
     {
         $sentencia = $this->db->prepare("SELECT * FROM producto");
         $sentencia->execute();

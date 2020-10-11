@@ -21,6 +21,16 @@ class CategoriasController
         $this->view->showHome($categorias);
     }
 
+    public function getModel()
+    {
+        return $this->model;
+    }
+
+    public function getCategorias()
+    {
+        return $this->model->getCategorias();
+    }
+
     public function insertCategoria() //Le pide al Model que agregue un producto nuevo
     {
         if (isset($_POST["nombre"]) && $_POST["nombre"] != "") {
@@ -31,6 +41,7 @@ class CategoriasController
 
     public function deleteCategoria() //Le pide al Model que borre un producto
     {
+        $this->checkLoggedIn();//Si no esta logueado me manda al Login
         $id = $_GET["id"];
         if (isset($id) && $id != "") {
             $this->model->deleteCategoria($id);
@@ -52,6 +63,7 @@ class CategoriasController
 
     public function formularioCategoria()
     {
+        //$this->checkLoggedIn();//Si no esta logueado me manda al Login
         if (isset($_GET["id_c"]) && $_GET["id_c"] != "") {
             $id = $_GET["id_c"];
             $action = "updateCategoria";
@@ -61,6 +73,15 @@ class CategoriasController
             $action = "insertCategoria";
             $categoria = array("id_categoria" => "", "nombre_categoria" => "");
             $this->view->showFormularioCategoria($categoria, $action);
+        }
+    }
+
+    private function checkLoggedIn()//Verifica si el usuario esta logueado. Deben llamarla todos los Controllers para cada accion que requiera permisos de usuario.
+    {
+        session_start();
+        if (!isset($_SESSION["EMAIL"])) {
+            header("Location" . LOGIN. "login");
+            die();
         }
     }
 }

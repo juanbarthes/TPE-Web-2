@@ -27,4 +27,12 @@ class ProductosView
         header("Location: ".BASE_URL."home");
     }
 
+    public function showFormularioProducto($producto, $action, $categorias)
+    {
+        $this->smarty->assign("producto", $producto);
+        $this->smarty->assign("action", $action);
+        $this->smarty->assign("categorias", $categorias);
+        $this->smarty->display("./templates/formularioProductos.tpl");
+    }
+
 }
