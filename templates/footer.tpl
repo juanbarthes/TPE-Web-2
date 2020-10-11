@@ -2,8 +2,11 @@
  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
  <div class="card">
      <div class="card-body">
-         <h5 class="card-title">Marca</h5>
-         <p class="card-text">Trabajo Practico Especial Web 2 TUDAI</p>
+         <h5 class="flux">Marca</h5>
+         <p class="flux">Trabajo Practico Especial Web 2 TUDAI</p>
+     </div>
+     <div class="card-body">
+        <h5 class="neon"> Redes</h5>
      </div>
  </div>
 
