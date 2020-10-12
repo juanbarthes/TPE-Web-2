@@ -12,13 +12,22 @@ class UsersView
         $this->smarty->assign("titulo", $this->title);
     }
 
-   public function showLogin($mensaje = "")
-   {
-       $this->smarty->assign("mensaje", $mensaje);
-       $this->smarty->display("./templates/login.tpl");
-   }
+    public function showLogin($mensaje = "", $prefijo = "./")
+    {
+        $this->smarty->assign("mensaje", $mensaje);
+        $this->smarty->assign("prefijo", $prefijo);
+        $this->smarty->display("./templates/login.tpl");
+    }
 
-   function ShowHomeLocation(){
-    header("Location: ".BASE_URL."home");
-}
+    public function showRegistro($mensaje = "", $prefijo = "./")
+    {
+        $this->smarty->assign("mensaje", $mensaje);
+        $this->smarty->assign("prefijo", $prefijo);
+        $this->smarty->display("./templates/registro.tpl");
+    }
+
+    function ShowHomeLocation()
+    {
+        header("Location: " . BASE_URL . "home");
+    }
 }

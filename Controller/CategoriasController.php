@@ -18,7 +18,10 @@ class CategoriasController
         //Traer Categorias de la DB
         $categorias = $this->model->getCategorias();
         //Mostrar los productos por pantalla
-        $this->view->showHome($categorias);
+        if ($this->checkLoggedIn()) {
+            $this->view->showHome($categorias, "./templates/homeAdmin.tpl");
+        } else
+            $this->view->showHome($categorias, "./templates/home.tpl");
     }
 
     public function getModel()
@@ -35,18 +38,19 @@ class CategoriasController
     {
         if (isset($_POST["nombre"]) && $_POST["nombre"] != "") {
             $this->model->insertCategoria($_POST["nombre"]);
-            $this->view->showHomeLocation();
+            header(BASE_URL);
         }
     }
 
-    public function deleteCategoria() //Le pide al Model que borre un producto
+    public function deleteCategoria($params = null) //Le pide al Model que borre un producto
     {
-        $this->checkLoggedIn();//Si no esta logueado me manda al Login
-        $id = $_GET["id"];
-        if (isset($id) && $id != "") {
-            $this->model->deleteCategoria($id);
+        if ($this->checkLoggedIn()) {
+            $id = $params[":id"];
+            if (isset($id) && $id != "") {
+                $this->model->deleteCategoria($id);
+            }
         }
-        $this->home();
+        header(BASE_URL);
     }
 
     public function updateCategoria() //Le pide al Model que actualice un producto
@@ -58,30 +62,40 @@ class CategoriasController
                 $this->model->updateCategoria($id, $nombre);
             }
         }
-        $this->view->ShowHomeLocation();
+        header(BASE_URL);
     }
 
     public function formularioCategoria()
     {
-        //$this->checkLoggedIn();//Si no esta logueado me manda al Login
-        if (isset($_GET["id_c"]) && $_GET["id_c"] != "") {
-            $id = $_GET["id_c"];
-            $action = "updateCategoria";
-            $categoria = $this->model->getCategoria(intval($id));
-            $this->view->showFormularioCategoria($categoria, $action);
+        if ($this->checkLoggedIn()) {
+            if (isset($_GET["id_c"]) && $_GET["id_c"] != "") {
+                $id = $_GET["id_c"];
+                $action = "updateCategoria";
+                $categoria = $this->model->getCategoria(intval($id));
+                $this->view->showFormularioCategoria($categoria, $action);
+            } else {
+                $action = "insertCategoria";
+                $categoria = array("id_categoria" => "", "nombre_categoria" => "");
+                $this->view->showFormularioCategoria($categoria, $action);
+            }
         } else {
-            $action = "insertCategoria";
-            $categoria = array("id_categoria" => "", "nombre_categoria" => "");
-            $this->view->showFormularioCategoria($categoria, $action);
+            header(LOGIN);
         }
     }
 
-    private function checkLoggedIn()//Verifica si el usuario esta logueado. Deben llamarla todos los Controllers para cada accion que requiera permisos de usuario.
+    private function checkLoggedIn() //Verifica si el usuario esta logueado. Deben llamarla todos los Controllers para cada accion que requiera permisos de usuario.
     {
-        session_start();
-        if (!isset($_SESSION["EMAIL"])) {
-            header("Location" . LOGIN. "login");
-            die();
+        if (session_status() == PHP_SESSION_NONE) { //para evitar que se llame varias veces a session_start() wn un mismo flujo
+            session_start();
+            if (!empty($_SESSION["EMAIL"])) {
+                return true;
+            }
         }
+
+        return false;
+    }
+
+    public function getProductosPorCategoria($id)
+    {
     }
 }

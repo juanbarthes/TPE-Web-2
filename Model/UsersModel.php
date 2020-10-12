@@ -24,8 +24,8 @@ class UsersModel
 
     public function insertUser($email, $contraseña, $admin)//Agrega un usuario a la DB
     {
-        $sentencia = $this->db->prepare("INSERT INTO usuario(email, contraseña, isAdmin) VALUES(?,?,?)");
-        $sentencia->execute(array($email, $contraseña, $admin));
+        $sentencia = $this->db->prepare("INSERT INTO usuario(email, password) VALUES(?,?)");
+        $sentencia->execute(array($email, $contraseña));
     }
 }
 
