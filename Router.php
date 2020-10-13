@@ -1,22 +1,44 @@
 <?php
+    require_once 'RouterClass.php';
     require_once 'Controller/ProductosController.php';
     require_once "Controller/CategoriasController.php";
-    require_once 'RouterClass.php';
+    require_once "Controller/UsersController.php";
     
     // CONSTANTES PARA RUTEO
-    define("BASE_URL", 'http://'.$_SERVER["SERVER_NAME"].':'.$_SERVER["SERVER_PORT"].dirname($_SERVER["PHP_SELF"]).'/');
+    define('LOGIN', 'Location: http://' . $_SERVER["SERVER_NAME"] . dirname($_SERVER["PHP_SELF"]) . '/login');
+    define('BASE_URL', 'Location: http://' . $_SERVER["SERVER_NAME"] . dirname($_SERVER["PHP_SELF"]) . '/home');
+    define('PRODUCTOS', 'Location: http://' . $_SERVER["SERVER_NAME"] . dirname($_SERVER["PHP_SELF"]) . '/productos');
+
 
     $r = new Router();
 
     // rutas
+    //Categorias
     $r->addRoute("home", "GET", "CategoriasController", "home");
     $r->addRoute("formularioCategoria", "GET", "CategoriasController", "formularioCategoria");
     $r->addRoute("insertCategoria", "POST", "CategoriasController", "insertCategoria");
     $r->addRoute("updateCategoria", "POST", "CategoriasController", "updateCategoria");
+    $r->addRoute("deleteCategoria/:id", "GET", "CategoriasController", "deleteCategoria");
+
+    //Producto
+    $r->addRoute("productos", "GET", "ProductosController", "getProductos");
+    $r->addRoute("productos/:id", "GET", "ProductosController", "getProductosCategoria");
+    $r->addRoute("producto/:id", "GET", "ProductosController", "getProducto");
+    $r->addRoute("insertProducto", "POST", "ProductosController", "insertProducto");
+    $r->addRoute("updateProducto", "POST", "ProductosController", "updateProducto");
+    $r->addRoute("formularioProducto", "GET", "ProductosController", "formularioProducto");
+    $r->addRoute("deleteProducto", "GET", "ProductosController", "deleteProducto");
+
+    //Usuario
+    $r->addRoute("login", "GET", "UsersController", "login");
+    $r->addRoute("logout", "GET", "UsersController", "logout");
+    $r->addRoute("verificarusuario", "POST", "UsersController", "verifyUser");
+    $r->addRoute("registro", "GET", "UsersController", "registro");
+    $r->addRoute("verificarregistro", "POST", "UsersController", "verificarRegistro");
+
 
     //Ruta por defecto.
     $r->setDefaultRoute("CategoriasController", "home");
 
     //run
-    $r->route($_GET['action'], $_SERVER['REQUEST_METHOD']); 
-?>
+    $r->route($_GET['action'], $_SERVER['REQUEST_METHOD']);

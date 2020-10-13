@@ -12,19 +12,31 @@ class ProductosView
         $this->smarty->assign("titulo", $this->title);
     }
 
-    public function showHome($productos)
+    public function showProductos($productos, $rutaTemplate, $prefijo = "./")
     {
         $this->smarty->assign("productos", $productos);
-        $this->smarty->display("./templates/tablaProductos.tpl");
+        $this->smarty->assign("prefijo", $prefijo);
+        $this->smarty->display($rutaTemplate);
     }
 
-    public function showProducto($producto)
+    public function showProducto($producto, $prefijo)
     {
-        # code...
+        $this->smarty->assign("producto", $producto);
+        $this->smarty->assign("prefijo", $prefijo);
+        $this->smarty->display("./templates/producto.tpl");
     }
 
     function ShowHomeLocation(){
         header("Location: ".BASE_URL."home");
+    }
+
+    public function showFormularioProducto($producto, $action, $categorias, $prefijo = "./")
+    {
+        $this->smarty->assign("prefijo", $prefijo);
+        $this->smarty->assign("producto", $producto);
+        $this->smarty->assign("action", $action);
+        $this->smarty->assign("categorias", $categorias);
+        $this->smarty->display("./templates/formularioProductos.tpl");
     }
 
 }

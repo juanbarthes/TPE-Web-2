@@ -8,11 +8,18 @@ class ProductosModel
         $this->db = new PDO('mysql:host=localhost;'.'dbname=productos;charset=utf8', 'root', '');
     }
 
-    public function getProductos(Type $var = null)//Obtiene los productos de la DB
+    public function getProductos()//Obtiene los productos de la DB
     {
         $sentencia = $this->db->prepare("SELECT * FROM producto");
         $sentencia->execute();
-        return $sentencia->fetchAll(PDO::FETCH_OBJ);
+        return $sentencia->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function getProductosCategoria($id)//Obtiene los productos de la DB segun su categoria
+    {
+        $sentencia = $this->db->prepare("SELECT * FROM producto WHERE categoria=?");
+        $sentencia->execute(array($id));
+        return $sentencia->fetchAll(PDO::FETCH_ASSOC);
     }
 
     public function getProducto($id)//Obtiene un producto solicitado de la DB
