@@ -99,25 +99,23 @@ body {
  background-color: #fe28da;
 }
 .logo{
-  width: 90%;
-  height: 90%;
+  width: 30%;
+  height: 30%;
 }
 .card-body{
 background-color: rgba(17, 17, 17, 0.925);
-width: 45%;
+
 }
 li{
   margin-top: 2% ;
   margin-bottom: 2% ;
 }
-.card{
-  width: 100% ;
-  display: flex !important;
-  flex-wrap: nowrap !important;
-  flex-direction: row !important;
-}
+ h5, p{
+  font-family:'Big Shoulders Display', cursive;
+  color: white;
+ }
 
-a img {
-  width: fit-content;
-  height: fit-content;
+img{
+  width: 520px;
+  height: 280px;
 }
