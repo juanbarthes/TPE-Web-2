@@ -1,5 +1,7 @@
 {include file="header.tpl"}
-<table class="table table-dark">
+<hr>
+<h1 class="text-center">Nuestros Productos</h1>
+<hr><table class="table table-dark">
     <thead>
         <tr>
             <th scope="col">Nombre</th>
@@ -10,7 +12,7 @@
     <tbody>
         {foreach from=$productos item=producto}
             <tr>
-                <td><a href='{$prefijo}producto/{$producto["id"]}'>{$producto["nombre"]}</a></td>
+                <td><a class="text-reset text-decoration-none" href='{$prefijo}producto/{$producto["id"]}'>{$producto["nombre"]}</a></td>
                 <td>{$producto["precio"]}</td>
                 <td>{$producto["nombre_categoria"]}</td>
             </tr>
