@@ -116,7 +116,6 @@ class ProductosController
         $categoria = $_POST["categoria"];
         $this->model->updateProducto($id, $nombre, $descripcion, $precio, $stock, $categoria);
         $this->getProductos();
-        header(PRODUCTOS);
     }
 
     public function formularioProducto()
