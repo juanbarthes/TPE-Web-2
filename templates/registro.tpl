@@ -10,7 +10,7 @@
             <input type="password" class="form-control" id="contraseña" name="contraseña" placeholder="Contraseña">
             <small id="emailHelp" class="form-text text-muted">No compartas tu contraseña con nadie</small>
         </div>
-        <button type="submit" class="btn btn-primary">Registrarme</button>
+        <button type="submit" class="btn btn-outline-info">Registrarme</button>
     </form>
     {if $mensaje != ""}
         <div class="alert alert-danger " role="alert">

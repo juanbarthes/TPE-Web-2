@@ -18,8 +18,8 @@
                 <td><a class="text-reset text-decoration-none" href='{$prefijo}producto/{$producto["id"]}'>{$producto["nombre"]}</a></td>
                 <td>{$producto["precio"]}</td>
                 <td>{$producto["nombre_categoria"]}</td>
-                <td><a class="badge badge-success" href='{$prefijo}formularioProducto?id_p={$producto["id"]}'>Editar</a></td>
-                <td><a class="badge badge-danger" href='{$prefijo}deleteProducto?id_p={$producto["id"]}'>Borrar</a></td>
+                <td><a class="btn btn-outline-success" href='{$prefijo}formularioProducto?id_p={$producto["id"]}'>Editar</a></td>
+                <td><a class="btn btn-outline-danger" href='{$prefijo}deleteProducto?id_p={$producto["id"]}'>Borrar</a></td>
             </tr>
         {/foreach}
     </tbody>

@@ -11,7 +11,7 @@
             <small id="emailHelp" class="form-text text-muted">No compartas tu contraseña con nadie</small>
 
         </div>
-        <button type="submit" class="btn btn-primary">Ingresar</button>
+        <button type="submit" class="btn btn-outline-info">Ingresar</button>
     </form>
     {if $mensaje != ""}
         <div class="alert alert-danger " role="alert">

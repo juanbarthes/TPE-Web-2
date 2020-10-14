@@ -1,12 +1,11 @@
  <!-- Optional JavaScript -->
  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
- <div class="card">
+ <div class="footer">
      <div class="card-body">
-         <h5 class="flux">Marca</h5>
-         <p class="flux">Trabajo Practico Especial Web 2 TUDAI</p>
+         <h5 class="card-subtitle flux">Marca</h5>
      </div>
-     <div class="card-body">
-        <h5 class="neon"> Redes</h5>
+     <div class="redes">
+        <h5 class="card-subtitle neon"> Redes</h5>
      </div>
  </div>
 

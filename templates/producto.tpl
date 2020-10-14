@@ -1,10 +1,12 @@
 {include file="header.tpl"}
-<div class="container">
-    <ul>
-        <li><h1>{$producto["nombre"]}</h1></li>
-        <li><h2>Precio: {$producto["precio"]} Pesos</h2></li>
-        <li>{$producto["descripcion"]}</li>
-        <li>Stock: {$producto["stock"]}</li>
-    </ul>
+
+<div class="divproducto">
+  <img class="card-img-top" src="../img/Procesadores.jpg" alt="Card image cap">
+  <div class="card-body">
+    <h5 class="card-title">{$producto["nombre"]}</h5>
+    <p class="card-text">{$producto["descripcion"]}</p>
+    <p class="card-text"><small class="text-muted">Stock: {$producto["stock"]}</small></p>
+  </div>
 </div>
+
 {include file="footer.tpl"}
