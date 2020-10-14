@@ -4,6 +4,7 @@
   <img class="card-img-top" src="../img/Procesadores.jpg" alt="Card image cap">
   <div class="card-body">
     <h5 class="card-title">{$producto["nombre"]}</h5>
+    <h5 class="card-title">Precio: {$producto["precio"]} ARS</h5>
     <p class="card-text">{$producto["descripcion"]}</p>
     <p class="card-text"><small class="text-muted">Stock: {$producto["stock"]}</small></p>
   </div>
