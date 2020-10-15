@@ -16,7 +16,7 @@ class ProductosController
         $this->controllerCategorias = new CategoriasController();
     }
 
-    public function getProductosCategoria($params)
+    public function getProductosCategoria($params)//Obtiene los productos de una categoria especifica
     {
         $id = $params[":id"];
         $categorias = $this->controllerCategorias->getCategorias();
@@ -44,6 +44,7 @@ class ProductosController
     {
         //Traer productos de la DB
         $productos = $this->model->getProductos();
+        //Traer categorias de la DB
         $categorias = $this->controllerCategorias->getCategorias();
         if (empty($categorias)) {
             $categorias = null;
@@ -121,6 +122,7 @@ class ProductosController
     public function formularioProducto()
     {
         if ($this->checkLoggedIn()) {
+            //Obtiene las categorias
             $categorias = $this->controllerCategorias->getCategorias();
             if (!$categorias) { //Si no habia categorias creadas, agrega una generica y vuelve a hacer el get.
                 $this->controllerCategorias->getModel()->insertCategoria("Ninguna");

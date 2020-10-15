@@ -14,6 +14,7 @@
 
     // rutas
     //Categorias
+    //ruta, metodo, controlador, funcion
     $r->addRoute("home", "GET", "CategoriasController", "home");
     $r->addRoute("formularioCategoria", "GET", "CategoriasController", "formularioCategoria");
     $r->addRoute("insertCategoria", "POST", "CategoriasController", "insertCategoria");

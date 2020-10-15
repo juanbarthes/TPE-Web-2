@@ -24,7 +24,7 @@ class CategoriasController
             $this->view->showHome($categorias, "./templates/home.tpl");
     }
 
-    public function getModel()
+    public function getModel()//Retorna el model
     {
         return $this->model;
     }
@@ -65,15 +65,15 @@ class CategoriasController
         header(BASE_URL);
     }
 
-    public function formularioCategoria()
+    public function formularioCategoria()//Prepara lo necesario para mostrar el formulario de categoria
     {
         if ($this->checkLoggedIn()) {
-            if (isset($_GET["id_c"]) && $_GET["id_c"] != "") {
+            if (isset($_GET["id_c"]) && $_GET["id_c"] != "") {//Si el GET contiene el id_c, el formulario se usa para editar una categoria
                 $id = $_GET["id_c"];
                 $action = "updateCategoria";
                 $categoria = $this->model->getCategoria(intval($id));
                 $this->view->showFormularioCategoria($categoria, $action);
-            } else {
+            } else {//Si no contiene el id_c el formulario se usa para agregar una nueva categoria
                 $action = "insertCategoria";
                 $categoria = array("id_categoria" => "", "nombre_categoria" => "");
                 $this->view->showFormularioCategoria($categoria, $action);
@@ -93,9 +93,5 @@ class CategoriasController
         }
 
         return false;
-    }
-
-    public function getProductosPorCategoria($id)
-    {
     }
 }

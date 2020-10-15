@@ -26,11 +26,13 @@ class UsersController
         $this->view->showRegistro();
     }
 
-    public function verifyUser()
+    public function verifyUser()//Comprobacion de los datos del login del lado del servidor
     {
+        //Verifica que los imput vengan correctamente cargados
         $user = $_POST["email"];
         $pass = $_POST["contraseña"];
         if (isset($user) && $user != "") {
+            //Se trae al usuario desde la DB
             $dbUser = $this->model->getUser($user);
             if (isset($dbUser) && $dbUser) {
                 
@@ -68,7 +70,7 @@ class UsersController
             $this->view->showRegistro("Rellene correctamente todos los campos");
     }
 
-    public function logout()
+    public function logout()//Termina la sesion
     {
         session_start();
         session_destroy();
