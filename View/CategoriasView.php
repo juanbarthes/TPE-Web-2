@@ -12,21 +12,18 @@ class CategoriasView
         $this->smarty->assign("titulo", $this->title);
     }
 
-    public function showHome($categorias, $templateLink, $prefijo = "./")
+    public function showHome($categorias, $templateLink, $logged = false)
     {
         $this->smarty->assign("categorias", $categorias);
-        $this->smarty->assign("prefijo", $prefijo);
+        $this->smarty->assign("logged", $logged);
         $this->smarty->display($templateLink);
     }
 
-    function ShowHomeLocation(){
-        header("Location: ".BASE_URL."home");
-    }
-
-    public function showFormularioCategoria($categorias = null, $action, $prefijo = "./")
+    public function showFormularioCategoria($categorias = null, $action)
     {
+        $logged = true;
         $this->smarty->assign("categoria", $categorias);
-        $this->smarty->assign("prefijo", $prefijo);
+        $this->smarty->assign("logged", $logged);
         $this->smarty->assign("action", $action);
         $this->smarty->display("./templates/formularioCategorias.tpl");
     }

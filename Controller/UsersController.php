@@ -12,13 +12,48 @@ class UsersController
         $this->view = new UsersView();
     }
 
+    public function getUsers()
+    {
+        if ($this->isAdmin()) {
+            $users = $this->model->getUsers();
+            if ($users) {
+                $this->view->showUsers($users);
+            } else
+                header(BASE_URL);
+        } else
+            header(BASE_URL);
+    }
+
     public function login()
     {
         if ($this->checkLoggedIn()) {
             header(BASE_URL);
-        }
-        else
+        } else
             $this->view->showLogin();
+    }
+
+    public function deleteUser($params = null)
+    {
+        if ($this->isAdmin()) {
+            $id = $params[':ID'];
+            if (isset($id)) {
+                $this->model->deleteUser($id);
+                header(USUARIOS);
+            }
+        } else
+            header(BASE_URL);
+    }
+
+    public function giveAdmin($params = null)
+    {
+        if ($this->isAdmin()) {
+            $id = $params[':ID'];
+            if (isset($id)) {
+                $this->model->setAdmin($id);
+                header(USUARIOS);
+            }
+        } else
+            header(BASE_URL);
     }
 
     public function registro() //Formulario de registro
@@ -26,7 +61,7 @@ class UsersController
         $this->view->showRegistro();
     }
 
-    public function verifyUser()//Comprobacion de los datos del login del lado del servidor
+    public function verifyUser() //Comprobacion de los datos del login del lado del servidor
     {
         //Verifica que los imput vengan correctamente cargados
         $user = $_POST["email"];
@@ -35,10 +70,11 @@ class UsersController
             //Se trae al usuario desde la DB
             $dbUser = $this->model->getUser($user);
             if (isset($dbUser) && $dbUser) {
-                
+
                 if (password_verify($pass, $dbUser->password)) {
                     session_start();
                     $_SESSION["EMAIL"] = $dbUser->email;
+                    $_SESSION["ADMIN"] = $dbUser->admin;
                     header(BASE_URL);
                 } else {
                     $mensaje = "Contraseña incorrecta";
@@ -56,12 +92,16 @@ class UsersController
 
     public function verificarRegistro()
     {
+        $nick = $_POST["nick"];
         $email = $_POST["email"];
         $pass = $_POST["contraseña"];
-        if (isset($email, $pass)) {
-            if (($email != "") && ($pass != "")) {
-                $encryptedPass = password_hash ($pass , PASSWORD_DEFAULT );
-                $this->model->insertUser($email, $encryptedPass, 1);
+        if (isset($nick, $email, $pass)) {
+            if (($email != "") && ($pass != "") && ($nick != "")) {
+                $encryptedPass = password_hash($pass, PASSWORD_DEFAULT);
+                $this->model->insertUser($nick, $email, $encryptedPass);
+                session_start();
+                $_SESSION["EMAIL"] = $email;
+                $_SESSION["ADMIN"] = 0;
                 header(BASE_URL);
             } else {
                 $this->view->showRegistro("Rellene correctamente todos los campos");
@@ -70,19 +110,29 @@ class UsersController
             $this->view->showRegistro("Rellene correctamente todos los campos");
     }
 
-    public function logout()//Termina la sesion
+    public function logout() //Termina la sesion
     {
         session_start();
         session_destroy();
         header(BASE_URL);
     }
-    
+
     private function checkLoggedIn() //Verifica si el usuario esta logueado. Deben llamarla todos los Controllers para cada accion que requiera permisos de usuario.
     {
-        session_start();
+        if (session_status() == PHP_SESSION_NONE) //para evitar que se llame varias veces a session_start() en un mismo flujo
+            session_start();
         if (!empty($_SESSION["EMAIL"])) {
             return true;
         }
+
         return false;
+    }
+
+    public function isAdmin()
+    {
+        if ($this->checkLoggedIn() && $_SESSION["ADMIN"] == "1") {
+            return true;
+        } else
+            return false;
     }
 }

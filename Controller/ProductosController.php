@@ -16,7 +16,7 @@ class ProductosController
         $this->controllerCategorias = new CategoriasController();
     }
 
-    public function getProductosCategoria($params)//Obtiene los productos de una categoria especifica
+    public function getProductosCategoria($params) //Obtiene los productos de una categoria especifica
     {
         $id = $params[":id"];
         $categorias = $this->controllerCategorias->getCategorias();
@@ -34,7 +34,7 @@ class ProductosController
             }
         }
         //Mostrar los productos por pantalla
-        if ($this->checkLoggedIn()) {
+        if ($this->isAdmin()) {
             $this->view->showProductos($productos, "./templates/tablaProductosAdmin.tpl", "../");
         } else
             $this->view->showProductos($productos, "./templates/tablaProductos.tpl", "../");
@@ -61,67 +61,92 @@ class ProductosController
             }
         }
         //Mostrar los productos por pantalla
-        if ($this->checkLoggedIn()) {
-            $this->view->showProductos($productos, "./templates/tablaProductosAdmin.tpl");
-        } else
+        if ($this->isAdmin()) {
+            $this->view->showProductos($productos, "./templates/tablaProductosAdmin.tpl", true);
+        } else {
+            if ($this->checkLoggedIn()) {
+                $this->view->showProductos($productos, "./templates/tablaProductos.tpl", true);
+            }
             $this->view->showProductos($productos, "./templates/tablaProductos.tpl");
+        }
     }
 
     public function getProducto($params) //Le pide al Model un producto y luego le pide al View que lo muestre por pantalla
     {
         $id = $params[":id"];
         if (isset($id) && $id != "") {
+            $permits = 'guest';
+            if ($this->checkLoggedIn()) {
+                $permits = 'normal';
+            }
+            if ($this->isAdmin()) {
+                $permits = 'admin';
+            }
             $producto = $this->model->getProducto($id);
-            $this->view->showProducto($producto, "../");
+            if ($permits != "guest") {
+                $this->view->showProducto($producto, $permits, $_SESSION["EMAIL"]);
+            }
+            $this->view->showProducto($producto, $permits);
         }
     }
 
     public function insertProducto() //Le pide al Model que agregue un producto nuevo
     {
-        $nombre = $_POST["nombre"];
-        $descripcion = $_POST["descripcion"];
-        $precio = $_POST["precio"];
-        $stock = $_POST["stock"];
-        $categoria = $_POST["categoria"];
-        if (isset($nombre, $descripcion, $precio, $stock, $categoria)) {
-            if ($stock == "") {
-                $stock = 0;
+        if (!$this->isAdmin()) {
+            header(LOGIN);
+        } else {
+            $nombre = $_POST["nombre"];
+            $descripcion = $_POST["descripcion"];
+            $precio = $_POST["precio"];
+            $stock = $_POST["stock"];
+            $categoria = $_POST["categoria"];
+            if (isset($nombre, $descripcion, $precio, $stock, $categoria)) {
+                if ($stock == "") {
+                    $stock = 0;
+                }
+                if ($categoria == "") {
+                    $categoria = null;
+                }
+                $this->model->insertProducto($nombre, $descripcion, $precio, $stock, $categoria);
             }
-            if ($categoria == "") {
-                $categoria = null;
-            }
-            $this->model->insertProducto($nombre, $descripcion, $precio, $stock, $categoria);
+            header(BASE_URL);
         }
-        header(BASE_URL);
     }
 
     public function deleteProducto() //Le pide al Model que borre un producto
     {
-        if ($this->checkLoggedIn()) {
+        if (!$this->isAdmin()) {
+            header(LOGIN);
+        } else {
             $id = $_GET["id_p"];
             if (isset($id) && $id != "") {
                 $this->model->deleteProducto($id);
-                header(BASE_URL);
-            } else
-                header(BASE_URL);
+            }
+            header(PRODUCTOS);
         }
     }
 
     public function updateProducto() //Le pide al Model que actualice un producto
     {
-        $id = $_POST["id_p"];
-        $nombre = $_POST["nombre"];
-        $descripcion = $_POST["descripcion"];
-        $precio = $_POST["precio"];
-        $stock = $_POST["stock"];
-        $categoria = $_POST["categoria"];
-        $this->model->updateProducto($id, $nombre, $descripcion, $precio, $stock, $categoria);
-        $this->getProductos();
+        if (!$this->isAdmin()) {
+            header(LOGIN);
+        } else {
+            $id = $_POST["id_p"];
+            $nombre = $_POST["nombre"];
+            $descripcion = $_POST["descripcion"];
+            $precio = $_POST["precio"];
+            $stock = $_POST["stock"];
+            $categoria = $_POST["categoria"];
+            $this->model->updateProducto($id, $nombre, $descripcion, $precio, $stock, $categoria);
+            $this->getProductos();
+        }
     }
 
     public function formularioProducto()
     {
-        if ($this->checkLoggedIn()) {
+        if (!$this->isAdmin()) {
+            header(LOGIN);
+        } else {
             //Obtiene las categorias
             $categorias = $this->controllerCategorias->getCategorias();
             if (!$categorias) { //Si no habia categorias creadas, agrega una generica y vuelve a hacer el get.
@@ -138,17 +163,25 @@ class ProductosController
                 $producto = array("id" => "", "nombre" => "", "descripcion" => "", "precio" => "", "stock" => "", "categoria" => "");
                 $this->view->showFormularioProducto($producto, $action, $categorias);
             }
-        } else {
-            header(LOGIN);
         }
     }
 
     private function checkLoggedIn() //Verifica si el usuario esta logueado. Deben llamarla todos los Controllers para cada accion que requiera permisos de usuario.
     {
-        session_start();
+        if (session_status() == PHP_SESSION_NONE) //para evitar que se llame varias veces a session_start() en un mismo flujo
+            session_start();
         if (!empty($_SESSION["EMAIL"])) {
             return true;
         }
+
         return false;
+    }
+
+    public function isAdmin()
+    {
+        if ($this->checkLoggedIn() && $_SESSION["ADMIN"] == "1") {
+            return true;
+        } else
+            return false;
     }
 }

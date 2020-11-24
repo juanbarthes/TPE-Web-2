@@ -14,6 +14,8 @@ class UsersView
 
     public function showLogin($mensaje = "", $prefijo = "./")
     {
+        $logged = false;
+        $this->smarty->assign("logged", $logged);
         $this->smarty->assign("mensaje", $mensaje);
         $this->smarty->assign("prefijo", $prefijo);
         $this->smarty->display("./templates/login.tpl");
@@ -21,9 +23,18 @@ class UsersView
 
     public function showRegistro($mensaje = "", $prefijo = "./")
     {
+        $logged = false;
+        $this->smarty->assign("logged", $logged);
         $this->smarty->assign("mensaje", $mensaje);
         $this->smarty->assign("prefijo", $prefijo);
         $this->smarty->display("./templates/registro.tpl");
+    }
+
+    public function showUsers($users)
+    {
+        $this->smarty->assign("users", $users);
+        $this->smarty->assign("prefijo", './');
+        $this->smarty->display("./templates/users.tpl");
     }
 
     function ShowHomeLocation()

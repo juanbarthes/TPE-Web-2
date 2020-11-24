@@ -1,7 +1,11 @@
 {include file="header.tpl"}
 <div class="container">
     <form class="my-3" action="verificarregistro" method="POST">
-        <div class="form-group">
+    <div class="form-group">
+            <label for="email">Nombre de Usuario</label>
+            <input type="text" class="form-control" id="nick" name="nick" placeholder="Apodo">
+        </div>    
+    <div class="form-group">
             <label for="email">Email de usuario</label>
             <input type="email" class="form-control" id="email" name="email" aria-describedby="emailHelp" placeholder="Direccion email">
         </div>

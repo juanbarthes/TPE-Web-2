@@ -12,27 +12,39 @@ class ProductosView
         $this->smarty->assign("titulo", $this->title);
     }
 
-    public function showProductos($productos, $rutaTemplate, $prefijo = "./")
+    public function showProductos($productos, $rutaTemplate, $logged = false)
     {
+        $this->smarty->assign("logged", $logged);
         $this->smarty->assign("productos", $productos);
-        $this->smarty->assign("prefijo", $prefijo);
         $this->smarty->display($rutaTemplate);
     }
 
-    public function showProducto($producto, $prefijo)
+    public function showProducto($producto, $permits, $user = null)
     {
+        $this->smarty->assign("permits", $permits);
         $this->smarty->assign("producto", $producto);
-        $this->smarty->assign("prefijo", $prefijo);
-        $this->smarty->display("./templates/producto.tpl");
+        $this->smarty->assign("user", $user);
+        if ($permits == 'guest') {
+            $this->smarty->assign("logged", false);
+            $this->smarty->display("./templates/producto.tpl");
+        }
+        else{
+            $this->smarty->assign("logged", true);
+            $this->smarty->display("./templates/productoUser.tpl");
+        }
+        
     }
 
     function ShowHomeLocation(){
         header("Location: ".BASE_URL."home");
     }
 
-    public function showFormularioProducto($producto, $action, $categorias, $prefijo = "./")
+    public function showFormularioProducto($producto, $action, $categorias)
     {
-        $this->smarty->assign("prefijo", $prefijo);
+        $logged = true;
+        $categoriaActual = $producto["categoria"];
+        $this->smarty->assign("categoriaActual", $categoriaActual);
+        $this->smarty->assign("logged", $logged);
         $this->smarty->assign("producto", $producto);
         $this->smarty->assign("action", $action);
         $this->smarty->assign("categorias", $categorias);

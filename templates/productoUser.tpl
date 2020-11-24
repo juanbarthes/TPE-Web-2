@@ -10,8 +10,8 @@
   </div>
 </div>
 <h2>Comentarios</h2>
+{include file="commentForm.tpl"}
 <div class="my-2 mx-5 p-3 bg-success" data-permits="{$permits}" data-id={$producto["id"]} id="commentsBox">
-<p>Esta publicacion no tiene comentarios aun.</p>
 </div>
 <script src="js/comments.js"></script>
 {include file="footer.tpl"}
