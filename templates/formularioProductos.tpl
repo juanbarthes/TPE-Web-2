@@ -1,6 +1,6 @@
 {include file="header.tpl"}
-<div class="container">
-    <form action={$action} method="POST">
+<div class="container my-3">
+    <form action={$action} method="POST" enctype="multipart/form-data">
         <input type="hidden" class="form-control" id="id_p" name="id_p" value="{$producto["id"]}">
         <div class="form-group">
             <label for="nombre">Nombre</label>
@@ -27,6 +27,11 @@
                 {/if}
             {/foreach}
         </select>
+        <div class="form-group my-2">
+            <label for="image">Agregar una imagen</label>
+            <input type="file" name="image" id="image">
+        </div>
+
 
         <button type="submit" class="btn btn-outline-info my-3">Submit</button>
     </form>

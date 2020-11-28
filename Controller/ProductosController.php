@@ -85,8 +85,8 @@ class ProductosController
             $producto = $this->model->getProducto($id);
             if ($permits != "guest") {
                 $this->view->showProducto($producto, $permits, $_SESSION["EMAIL"]);
-            }
-            $this->view->showProducto($producto, $permits);
+            } else
+                $this->view->showProducto($producto, $permits);
         }
     }
 
@@ -100,6 +100,8 @@ class ProductosController
             $precio = $_POST["precio"];
             $stock = $_POST["stock"];
             $categoria = $_POST["categoria"];
+            $tmpImage = $_FILES['image']['tmp_name'];
+            $name = $_FILES['image']['name'];
             if (isset($nombre, $descripcion, $precio, $stock, $categoria)) {
                 if ($stock == "") {
                     $stock = 0;
@@ -107,10 +109,58 @@ class ProductosController
                 if ($categoria == "") {
                     $categoria = null;
                 }
-                $this->model->insertProducto($nombre, $descripcion, $precio, $stock, $categoria);
+                if (isset($tmpImage)) {
+                    $imgPath = $this->uploadImage($tmpImage, $name);
+                    $this->model->insertProducto($nombre, $descripcion, $precio, $stock, $categoria, $imgPath);
+                } else
+                    $this->model->insertProducto($nombre, $descripcion, $precio, $stock, $categoria);
             }
             header(BASE_URL);
         }
+    }
+
+    public function updateProducto() //Le pide al Model que actualice un producto
+    {
+        if (!$this->isAdmin()) {
+            header(LOGIN);
+        } else {
+            $id = $_POST["id_p"];
+            $producto = $this->model->getProducto($id);
+            $nombre = $_POST["nombre"];
+            $descripcion = $_POST["descripcion"];
+            $precio = $_POST["precio"];
+            $stock = $_POST["stock"];
+            $categoria = $_POST["categoria"];
+            $image = $producto['imagen'];
+            $tmpImage = $_FILES['image']['tmp_name'];
+            $name = $_FILES['image']['name'];
+            if (isset($tmpImage) && ($tmpImage != '')) {
+                unlink($image);
+                $imgPath = $this->uploadImage($tmpImage, $name);
+                $this->model->updateProducto($id, $nombre, $descripcion, $precio, $stock, $categoria, $imgPath);
+            } else
+                $this->model->updateProducto($id, $nombre, $descripcion, $precio, $stock, $categoria, $image);
+            $this->getProductos();
+        }
+    }
+
+    public function uploadImage($tmpName, $name)
+    {
+        $path = "img/" . uniqid("", true) . "." . strtolower(pathinfo($name, PATHINFO_EXTENSION));
+        move_uploaded_file($tmpName, $path);
+        return $path;
+    }
+
+    public function removeImage($params)
+    {
+        $id = $params[':id'];
+        $product = $this->model->getProducto($id);
+        $image = $product['imagen'];
+        if (($image != '') && ($image != 'img/imagen-generica.jpg')) {
+            unlink($image);
+        }
+        $this->model->setGenericPath($id, 'img/imagen-generica.jpg');
+        header(PRODUCTOS);
     }
 
     public function deleteProducto() //Le pide al Model que borre un producto
@@ -123,22 +173,6 @@ class ProductosController
                 $this->model->deleteProducto($id);
             }
             header(PRODUCTOS);
-        }
-    }
-
-    public function updateProducto() //Le pide al Model que actualice un producto
-    {
-        if (!$this->isAdmin()) {
-            header(LOGIN);
-        } else {
-            $id = $_POST["id_p"];
-            $nombre = $_POST["nombre"];
-            $descripcion = $_POST["descripcion"];
-            $precio = $_POST["precio"];
-            $stock = $_POST["stock"];
-            $categoria = $_POST["categoria"];
-            $this->model->updateProducto($id, $nombre, $descripcion, $precio, $stock, $categoria);
-            $this->getProductos();
         }
     }
 
@@ -173,7 +207,6 @@ class ProductosController
         if (!empty($_SESSION["EMAIL"])) {
             return true;
         }
-
         return false;
     }
 

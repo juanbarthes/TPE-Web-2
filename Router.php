@@ -31,6 +31,7 @@
     $r->addRoute("updateProducto", "POST", "ProductosController", "updateProducto");
     $r->addRoute("formularioProducto", "GET", "ProductosController", "formularioProducto");
     $r->addRoute("deleteProducto", "GET", "ProductosController", "deleteProducto");
+    $r->addRoute("removeImage/:id", "GET", "ProductosController", "removeImage");
 
     //Usuario
     $r->addRoute("login", "GET", "UsersController", "login");

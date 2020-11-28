@@ -1,7 +1,7 @@
 {include file="header.tpl"}
 
-<div class="divproducto">
-  <img class="card-img-top" src="img/Procesadores.jpg" alt="Card image cap">
+<div class="divproducto container">
+  <img class="" src="{$producto['imagen']}" alt="Card image cap">
   <div class="card-body">
     <h2 class="card-title">{$producto["nombre"]}</h2>
     <h5 class="card-title">Precio: {$producto["precio"]} ARS</h5>

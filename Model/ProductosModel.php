@@ -29,10 +29,10 @@ class ProductosModel
         return $sentencia->fetch(PDO::FETCH_ASSOC);
     }
 
-    public function insertProducto($nombre, $descripcion, $precio, $stock, $categoria)//Agrega un producto a la DB
+    public function insertProducto($nombre, $descripcion, $precio, $stock, $categoria, $image = '')//Agrega un producto a la DB
     {
-        $sentencia = $this->db->prepare("INSERT INTO producto(nombre, descripcion, precio, stock, categoria) VALUES(?,?,?,?,?)");
-        $sentencia->execute(array($nombre, $descripcion, $precio, $stock, $categoria));
+        $sentencia = $this->db->prepare("INSERT INTO producto(nombre, descripcion, precio, stock, categoria, imagen) VALUES(?,?,?,?,?,?)");
+        $sentencia->execute(array($nombre, $descripcion, $precio, $stock, $categoria, $image));
     }
 
     public function deleteProducto($id)//Borra un producto de la DB
@@ -41,9 +41,15 @@ class ProductosModel
        $sentencia->execute(array($id)); 
     }
 
-    public function updateProducto($id, $nombre, $descripcion, $precio, $stock, $categoria)//Actualiza los datos de un producto de la DB
+    public function updateProducto($id, $nombre, $descripcion, $precio, $stock, $categoria, $image)//Actualiza los datos de un producto de la DB
     {
-        $sentencia = $this->db->prepare("UPDATE producto SET nombre=?, descripcion=?, precio=?, stock=?, categoria=? WHERE id=?");
-        $sentencia->execute(array($nombre, $descripcion, $precio, $stock, $categoria, $id));
+        $sentencia = $this->db->prepare("UPDATE producto SET nombre=?, descripcion=?, precio=?, stock=?, categoria=?, imagen=? WHERE id=?");
+        $sentencia->execute(array($nombre, $descripcion, $precio, $stock, $categoria, $image, $id));
+    }
+
+    public function setGenericPath($id, $path)//Sirve para colocar la ruta de una imagen generica en caso de que borre la imagen de una publicacion.
+    {
+        $sentencia = $this->db->prepare("UPDATE producto SET imagen=? WHERE id=?");
+        $sentencia->execute(array($path, $id));
     }
 }
