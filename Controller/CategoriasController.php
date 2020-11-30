@@ -46,7 +46,7 @@ class CategoriasController
                 $this->model->insertCategoria($_POST["nombre"]);
             }
         }
-        header(BASE_URL);
+        header(HOME);
     }
 
     public function deleteCategoria($params = null) //Le pide al Model que borre un producto
@@ -57,7 +57,7 @@ class CategoriasController
                 $this->model->deleteCategoria($id);
             }
         }
-        header(BASE_URL);
+        header(HOME);
     }
 
     public function updateCategoria() //Le pide al Model que actualice un producto
@@ -71,7 +71,7 @@ class CategoriasController
                 }
             }
         }
-        header(BASE_URL);
+        header(HOME);
     }
 
     public function formularioCategoria() //Prepara lo necesario para mostrar el formulario de categoria

@@ -23,7 +23,7 @@ class ApiCommentsController extends ApiController
         }
     }
 
-    public function insert($params = [])
+    public function insert($params = [])//inserta un nuevo comentario
     {
         $body = $this->getData();
         $user = $body->user;
@@ -37,7 +37,7 @@ class ApiCommentsController extends ApiController
             $this->view->response("Error al agregar comentario", 404);
     }
 
-    public function delete($params = [])
+    public function delete($params = [])//borra un comentario
     {
         $id = $params[':ID'];
         $result = $this->model->deleteComment($id);

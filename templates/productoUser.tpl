@@ -1,8 +1,9 @@
 {include file="header.tpl"}
 
 <div class="divproducto container">
-  <img class="" src="{$producto['imagen']}" alt="Card image cap">
+  <img class="my-2" src="{$producto['imagen']}" alt="Card image cap">
   {if {$permits} == 'admin'}
+    <br>
     <a class="btn btn-outline-danger" href='removeImage/{$producto['id']}'>Quitar imagen</a>  
   {/if}
   <div class="card-body">

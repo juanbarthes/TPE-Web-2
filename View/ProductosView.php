@@ -34,11 +34,7 @@ class ProductosView
         }
         
     }
-
-    function ShowHomeLocation(){
-        header("Location: ".BASE_URL."home");
-    }
-
+    
     public function showFormularioProducto($producto, $action, $categorias)
     {
         $logged = true;

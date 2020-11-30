@@ -19,15 +19,15 @@ class UsersController
             if ($users) {
                 $this->view->showUsers($users);
             } else
-                header(BASE_URL);
+                header(HOME);
         } else
-            header(BASE_URL);
+            header(HOME);
     }
 
     public function login()
     {
         if ($this->checkLoggedIn()) {
-            header(BASE_URL);
+            header(HOME);
         } else
             $this->view->showLogin();
     }
@@ -41,7 +41,7 @@ class UsersController
                 header(USUARIOS);
             }
         } else
-            header(BASE_URL);
+            header(HOME);
     }
 
     public function giveAdmin($params = null)
@@ -53,7 +53,7 @@ class UsersController
                 header(USUARIOS);
             }
         } else
-            header(BASE_URL);
+            header(HOME);
     }
 
     public function registro() //Formulario de registro
@@ -74,8 +74,9 @@ class UsersController
                 if (password_verify($pass, $dbUser->password)) {
                     session_start();
                     $_SESSION["EMAIL"] = $dbUser->email;
+                    $_SESSION["NICK"] = $dbUser->nick;
                     $_SESSION["ADMIN"] = $dbUser->admin;
-                    header(BASE_URL);
+                    header(HOME);
                 } else {
                     $mensaje = "Contraseña incorrecta";
                     $this->view->showLogin($mensaje);
@@ -101,8 +102,9 @@ class UsersController
                 $this->model->insertUser($nick, $email, $encryptedPass);
                 session_start();
                 $_SESSION["EMAIL"] = $email;
+                $_SESSION["NICK"] = $nick;
                 $_SESSION["ADMIN"] = 0;
-                header(BASE_URL);
+                header(HOME);
             } else {
                 $this->view->showRegistro("Rellene correctamente todos los campos");
             }
@@ -114,7 +116,7 @@ class UsersController
     {
         session_start();
         session_destroy();
-        header(BASE_URL);
+        header(HOME);
     }
 
     private function checkLoggedIn() //Verifica si el usuario esta logueado. Deben llamarla todos los Controllers para cada accion que requiera permisos de usuario.

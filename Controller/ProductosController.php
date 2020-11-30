@@ -84,7 +84,7 @@ class ProductosController
             }
             $producto = $this->model->getProducto($id);
             if ($permits != "guest") {
-                $this->view->showProducto($producto, $permits, $_SESSION["EMAIL"]);
+                $this->view->showProducto($producto, $permits, $_SESSION["NICK"]);
             } else
                 $this->view->showProducto($producto, $permits);
         }
@@ -109,13 +109,13 @@ class ProductosController
                 if ($categoria == "") {
                     $categoria = null;
                 }
-                if (isset($tmpImage)) {
+                if ($tmpImage != '') {
                     $imgPath = $this->uploadImage($tmpImage, $name);
                     $this->model->insertProducto($nombre, $descripcion, $precio, $stock, $categoria, $imgPath);
                 } else
-                    $this->model->insertProducto($nombre, $descripcion, $precio, $stock, $categoria);
+                    $this->model->insertProducto($nombre, $descripcion, $precio, $stock, $categoria, 'img/imagen-generica.jpg');
             }
-            header(BASE_URL);
+            header(HOME);
         }
     }
 
@@ -135,7 +135,9 @@ class ProductosController
             $tmpImage = $_FILES['image']['tmp_name'];
             $name = $_FILES['image']['name'];
             if (isset($tmpImage) && ($tmpImage != '')) {
-                unlink($image);
+                if (($image != "img/imagen-generica.jpg") && ($image != "")) {
+                    unlink($image);
+                }
                 $imgPath = $this->uploadImage($tmpImage, $name);
                 $this->model->updateProducto($id, $nombre, $descripcion, $precio, $stock, $categoria, $imgPath);
             } else
@@ -144,14 +146,14 @@ class ProductosController
         }
     }
 
-    public function uploadImage($tmpName, $name)
+    public function uploadImage($tmpName, $name)//sube la imagen al servidor
     {
         $path = "img/" . uniqid("", true) . "." . strtolower(pathinfo($name, PATHINFO_EXTENSION));
         move_uploaded_file($tmpName, $path);
         return $path;
     }
 
-    public function removeImage($params)
+    public function removeImage($params)//remueve del servidor la imagen vinculada al producto y le asigna una imagen generica
     {
         $id = $params[':id'];
         $product = $this->model->getProducto($id);
@@ -170,6 +172,10 @@ class ProductosController
         } else {
             $id = $_GET["id_p"];
             if (isset($id) && $id != "") {
+                $producto = $this->model->getProducto($id);
+                if ($producto['imagen'] != 'img/imagen-generica.jpg') {
+                    unlink($producto['imagen']);
+                }
                 $this->model->deleteProducto($id);
             }
             header(PRODUCTOS);
